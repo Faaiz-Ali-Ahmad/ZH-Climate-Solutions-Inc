@@ -59,6 +59,7 @@ By default a booking opens the visitor's email app with everything filled in, ad
 **Recommended before launch:** create a free form at https://formspree.io (or https://web3forms.com) and paste the URL into `public/config.js` → `formEndpoint`. Bookings will then go straight to the inbox.
 
 ## Deploying
+- **Vercel** (set up in `vercel.json`): import this repo at vercel.com/new and click Deploy, with no settings to change. Every push to `main` redeploys automatically. While the site is a prototype, `vercel.json` sends `X-Robots-Tag: noindex` so search engines don't list it. Remove that header at launch.
 - **Static host** (Netlify, Cloudflare Pages, Vercel): publish the `public/` folder. Security headers come from `public/_headers`.
 - **Node host** (for AI chat): run `npm start` with HOST=0.0.0.0 behind HTTPS, and set ANTHROPIC_API_KEY in the host's environment settings (plus ALLOWED_ORIGINS=https://your-domain, and TRUST_PROXY=1 behind a reverse proxy).
 
