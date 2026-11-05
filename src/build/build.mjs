@@ -607,7 +607,7 @@ ${header('privacy')}
 <section class="sec"><div class="wrap prose">
 <p>When you request an appointment or contact us, we collect the details you provide — such as your name, phone number, email, address and a description of the work — so we can respond to your request and schedule service.</p>
 <p>We use this information only to communicate with you about your request and the services you ask for. We do not sell your personal information.</p>
-<p>Booking requests are delivered to ZH Climate Solutions by email or through our form-delivery provider. This website does not use advertising cookies.</p>
+<p>Booking requests are delivered to ZH Climate Solutions by email or through our form-delivery provider. This website does not use advertising or tracking cookies. We count page visits with Vercel Web Analytics, which uses no cookies and does not identify you.</p>
 <p>To ask about, correct or delete your information, contact <a href="mailto:${C.email}">${C.email}</a> or call <a href="tel:${C.tel}">${C.phone}</a>.</p>
 </div></section>
 </main>
