@@ -3,10 +3,15 @@
   "version": "4.2.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node server/server.mjs",
     "build": "node src/build/build.mjs",
     "build:3d": "npx --yes esbuild@0.28.2 src/3d/app.js --bundle --format=iife --minify --outfile=public/assets/js/app.bundle.js"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
   }
 }
