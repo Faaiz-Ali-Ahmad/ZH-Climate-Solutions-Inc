@@ -1,5 +1,6 @@
 // Static site generator: node build/build.mjs  → writes *.html in the site root
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { company as C, trust, services, bookServices, areas, generalFaqs, brands } from '../content/data.mjs';
@@ -8,6 +9,9 @@ import { sub } from '../content/subpages.mjs';
 
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const root = path.join(repo, 'public');
+// Asset version: changes whenever the CSS, JS or site content changes, so browsers always load the latest files
+const V = createHash('md5').update(['public/assets/css/style.css', 'public/assets/css/fonts.css', 'public/assets/js/main.js', 'public/assets/js/chat.js', 'public/assets/js/app.bundle.js', 'src/content/data.mjs', 'src/content/subpages.mjs']
+  .map(f => { try { return readFileSync(path.join(repo, f)); } catch { return ''; } }).join('')).digest('hex').slice(0, 8);
 const allCities = areas.flatMap(([, c]) => c);
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const year = new Date().getFullYear();
@@ -32,8 +36,8 @@ const head = ({ title, desc, page, extraHead = '' }) => `<!doctype html>
 <meta property="og:type" content="website">
 <meta property="og:image" content="${C.site}/assets/img/brand-mark.webp">
 <link rel="icon" href="~/assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="~/assets/css/fonts.css">
-<link rel="stylesheet" href="~/assets/css/style.css">
+<link rel="stylesheet" href="~/assets/css/fonts.css?v=${V}">
+<link rel="stylesheet" href="~/assets/css/style.css?v=${V}">
 <script>document.documentElement.classList.add('js')</script>
 ${extraHead}
 </head>`;
@@ -241,10 +245,10 @@ const footer = `<footer class="footer">
   </section>
 </div>`;
 
-const scripts = (extra = '') => `<script src="~/config.js"></script>
-<script src="~/assets/js/main.js"></script>
-<script src="~/assets/js/kb.js"></script>
-<script src="~/assets/js/chat.js"></script>${extra}
+const scripts = (extra = '') => `<script src="~/config.js?v=${V}"></script>
+<script src="~/assets/js/main.js?v=${V}"></script>
+<script src="~/assets/js/kb.js?v=${V}"></script>
+<script src="~/assets/js/chat.js?v=${V}"></script>${extra}
 </body>
 </html>`;
 
@@ -335,8 +339,6 @@ ${header('home')}
   <div class="wrap trustbar__in">${trust.map(t => `<div class="trustbar__item">${icon(t.icon)}<div><b>${t.title}</b><span>${t.text}</span></div></div>`).join('')}</div>
 </section>
 
-${brandsFor()}
-
 <section class="sec" id="services">
   <div class="wrap">
     <div class="sec__head"><p class="eyebrow">What we do</p><h2 class="h2">Every system that keeps your property comfortable, safe and powered.</h2><p class="sec__sub">Installation, repair and maintenance for homes and businesses — from furnaces and heat pumps to drains, panels and water heaters.</p></div>
@@ -373,6 +375,8 @@ ${process}
     </div>
   </div>
 </section>
+
+${brandsFor()}
 
 <section class="sec seasons" id="seasons">
   <div class="wrap seasons__grid">
@@ -415,7 +419,7 @@ ${process}
 ${ctaBand('Comfort, safety and power — one call away.')}
 </main>
 ${footer}
-${scripts('\n<script src="~/assets/js/app.bundle.js"></script>')}`);
+${scripts('\n<script src="~/assets/js/app.bundle.js?v=${V}"></script>')}`);
 
 /* ---------------- SERVICE PAGES ---------------- */
 for (const s of services) {
