@@ -1,53 +1,76 @@
 # ZH Climate Solutions Inc. — Website
 
-A professional multi-page site built to get appointments booked.
+Website for ZH Climate Solutions Inc., a heating, cooling, plumbing and electrical company serving Brampton, the GTA and Ontario. It's built to get appointments booked.
 
 ## Run it
     npm start      →  http://127.0.0.1:4173   (Ctrl+C to stop)
-Double-clicking index.html also works. No npm install needed.
+No npm install needed. You can also open `public/index.html` directly in a browser.
 
-## Pages
-- index.html: homepage with the booking widget in the hero, services, emergency banner, how it works, residential/commercial, why ZH, seasonal checklist, service areas, FAQ
-- heating, cooling, heat-pumps, ventilation-air-quality, water-heaters, water-treatment, plumbing, electrical, commercial, maintenance-plans (.html): detailed service pages, each with its own pre-filled booking form, "signs you need service", detailed offerings and FAQs
-- service-areas.html: 50+ Ontario communities grouped by region, with search
-- book.html: dedicated booking page
-- privacy.html
-
-## Booking form
-It's a 3-step form: service → day and arrival window → contact details. There's an "urgent" option that tells people to call.
-By default a booking opens the visitor's email app with everything filled in, addressed to zhclimatesolutions@gmail.com.
-**Recommended before launch:** create a free form at https://formspree.io (or https://web3forms.com) and paste the URL into `config.js` → `formEndpoint`. Bookings will then arrive in the inbox directly, with no email app needed.
-
-
-## New in this version
-- **54 detailed sub-pages** (one per job, e.g. heating-furnace-repair.html), each with an overview, what's included, FAQs, related jobs and a pre-filled booking form. Content lives in build/subpages.mjs.
-- **Two-level Services menu**: hover a service to see its sub-pages. On phones, each service expands.
-- **Floating "Book a free consultation" panel** on every page (orange tab on the right edge), with a quick call-back form. It's hidden on phones, where the bottom Call / Book bar takes over.
-- **ZH Assistant chat** (bottom-right) on every page:
-  - Built-in mode (default, no setup): answers about services, sub-services, service areas, brands, FAQs and pricing policy, and gives safety guidance for gas smells, CO alarms, sparks and floods. It can pre-fill the booking form or open the call-back panel.
-  - AI mode (Claude): run the site with `npm start` and set your Anthropic API key first:
-        Windows (PowerShell):  $env:ANTHROPIC_API_KEY="sk-ant-..." ; npm start
-        Mac/Linux:             ANTHROPIC_API_KEY=sk-ant-... npm start
-    The key stays on the server (api/chat-core.mjs) and is never sent to the browser. Optional CLAUDE_MODEL overrides the default model (claude-haiku-5-5).
-    On static hosting without a server, the chat automatically uses built-in mode. For Netlify, see api/netlify-chat.mjs.
-  - Safety questions are always answered by the built-in rules, never by the AI.
+## Project structure
+```
+public/                      the website (this is the folder you host)
+  index.html                 homepage with booking in the hero
+  book.html                  booking page
+  service-areas.html         50+ Ontario communities, with search
+  privacy.html
+  config.js                  form endpoint, chat setting, phone and email
+  robots.txt, _headers       crawler rules, security headers for static hosts
+  services/<service>/
+    index.html               service overview (10 services)
+    <job>.html               one page per job (54 pages)
+  assets/
+    css/                     style.css, fonts.css
+    js/                      main.js, chat.js, kb.js (generated), app.bundle.js (generated)
+    img/                     optimised photos
+    favicon.svg
+server/
+  server.mjs                 local and production server for public/ and /api/chat
+  chat-core.mjs              AI chat backend (reads the API key from the environment)
+  kb.json                    chat knowledge base (generated)
+  netlify-chat.mjs           optional Netlify Function wrapper
+src/
+  content/data.mjs           all site text: services, areas, brands, FAQs, trust points
+  content/subpages.mjs       text for each job page
+  build/build.mjs            page generator (writes public/*.html and the knowledge base)
+  build/icons.mjs            icon set
+  3d/                        homepage 3D gradient and chrome logo (source of app.bundle.js)
+```
 
 ## Editing content
-All text lives in `build/data.mjs` (services, service areas, FAQs, trust points). After editing, run:
+Edit the text in `src/content/`, then run:
     npm run build
-to regenerate every page. Styling is in style.css. The homepage 3D (gradient + chrome logo) source is in src/ (rebuild with `npm run build:3d`).
+This regenerates every page in `public/`. Styling is in `public/assets/css/style.css`. To change the homepage 3D, edit `src/3d/` and run `npm run build:3d`.
+
+## Features
+- **Booking form** on the homepage, booking page and every service page, in 3 steps: service, then day and arrival window, then contact details. There's an "urgent" option that tells people to call.
+- **Two-level Services menu**: hover a service to see its job pages. On phones, each service expands.
+- **"Book a free consultation" panel**: an orange tab on the right edge of every page opens a quick call-back form.
+- **Chat assistant** on every page:
+  - Built-in mode (default) answers about services, areas, brands, FAQs and pricing policy, gives safety guidance for gas smells, CO alarms, sparks and floods, and can fill in the booking form.
+  - AI mode: set an Anthropic API key before starting the server:
+        Windows (Command Prompt):  set ANTHROPIC_API_KEY=your-key  then  npm start
+        Windows (PowerShell):      $env:ANTHROPIC_API_KEY="your-key" ; npm start
+        Mac/Linux:                 ANTHROPIC_API_KEY=your-key npm start
+    Optional CLAUDE_MODEL overrides the default model (claude-haiku-5-5). On static hosting without a server, the chat uses built-in mode automatically.
+  - Safety questions are always answered by the built-in rules.
+
+## Receiving bookings
+By default a booking opens the visitor's email app with everything filled in, addressed to zhclimatesolutions@gmail.com.
+**Recommended before launch:** create a free form at https://formspree.io (or https://web3forms.com) and paste the URL into `public/config.js` → `formEndpoint`. Bookings will then go straight to the inbox.
+
+## Deploying
+- **Static host** (Netlify, Cloudflare Pages, Vercel): publish the `public/` folder. Security headers come from `public/_headers`.
+- **Node host** (for AI chat): run `npm start` with HOST=0.0.0.0 behind HTTPS, and set ANTHROPIC_API_KEY in the host's environment settings (plus ALLOWED_ORIGINS=https://your-domain, and TRUST_PROXY=1 behind a reverse proxy).
 
 ## Before launch — confirm with the client
-- The claims used are the ones on ZH's own flyers: licensed & insured, free estimates, 24/7 emergency service. Confirm they're accurate.
+- The claims used come from ZH's own flyers: licensed and insured, free estimates, 24/7 emergency service.
 - Confirm the service-area list and that every listed service is offered.
-- Add real Google reviews, licence numbers (e.g. TSSA/ESA) and any warranty or financing details once you have them. None were invented here.
+- Add real Google reviews, licence numbers and any warranty or financing details once you have them.
 
 ## Security
-- **API keys**: there are none in the code. The AI key is read only from the ANTHROPIC_API_KEY environment variable on the server and is never sent to the browser. Never paste it into config.js or any HTML/JS file. A .gitignore blocks .env files if you use git later.
-- **Server (server.mjs)** serves an allowlist of public files only. Source code (src/, build/, api/), server files, package.json, README and dot-files return 404, including upper/lower-case tricks on Windows.
-- **Headers**: CSP, X-Frame-Options, nosniff, Referrer-Policy and Permissions-Policy are sent by server.mjs, and by `_headers` on Netlify or Cloudflare Pages (which also adds HSTS).
-- **Chat API**: same-site requests only (set ALLOWED_ORIGINS for your live domain if needed). JSON only, 16 KB body limit, 12 messages per minute per visitor, AI_HOURLY_LIMIT site-wide cap (default 300/hour), 20-second timeout, and generic error messages.
-- **Forms**: length limits, phone check, a honeypot against spam bots, and everything shown back is escaped. They only post to https form services.
-- **No admin area, logins, user accounts, database or stored passwords**: the site keeps no personal data. Booking requests go straight to email or the form service.
-- **Static hosting**: run `npm run dist` and publish ONLY the dist/ folder.
-- **Going live**: use HTTPS, put the key in the host's environment settings, and set HOST=0.0.0.0 only behind a reverse proxy (with TRUST_PROXY=1).
+- **No secrets in the code.** The API key is read only from the environment on the server and is never sent to the browser. `.gitignore` blocks `.env` files.
+- **The server only serves files in public/**, through an allowlist. Source code, server files and dot-files return 404, including upper/lower-case tricks on Windows.
+- **Headers**: CSP, X-Frame-Options, nosniff, Referrer-Policy and Permissions-Policy (plus HSTS on static hosts).
+- **Chat API**: same-site requests only, JSON only, 16 KB body limit, 12 messages per minute per visitor, a site-wide hourly cap (AI_HOURLY_LIMIT, default 300) and a 20-second timeout.
+- **Forms**: length limits, a phone check, a spam honeypot, and everything shown back is escaped. They only post to https form services.
+- **No logins, accounts, database or stored personal data.**

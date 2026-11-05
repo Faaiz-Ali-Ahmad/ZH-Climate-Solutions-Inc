@@ -1,7 +1,8 @@
-# never commit secrets or build output
+# never commit secrets
 .env
 .env.*
 *.pem
 *.key
+# local only
 node_modules/
-dist/
+brand-assets/
