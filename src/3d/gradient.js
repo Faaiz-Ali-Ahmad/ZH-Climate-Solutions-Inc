@@ -105,7 +105,7 @@ export function createGradient(canvas, state) {
   }
   addEventListener('resize', resize); resize();
 
-  const clock = new THREE.Clock(); let visible = true;
+  const clock = (() => { let last = performance.now(); return { getDelta() { const now = performance.now(), d = (now - last) / 1000; last = now; return d; } }; })(); let visible = true;
   new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(canvas);
   const sm = new THREE.Vector2();
   (function loop() {

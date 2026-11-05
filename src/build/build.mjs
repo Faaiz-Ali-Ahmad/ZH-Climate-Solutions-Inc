@@ -237,7 +237,7 @@ const footer = `<footer class="footer">
 <div class="chat">
   <button class="chat__launcher" type="button" aria-expanded="false" aria-controls="chat-panel">${icon('chat')}<span>Ask ZH</span></button>
   <section class="chat__panel" id="chat-panel" role="dialog" aria-label="ZH Climate assistant" hidden>
-    <header class="chat__head"><span class="chat__avatar">ZH</span><div><b>ZH Assistant</b><small class="chat__mode">Answers about services, areas and booking</small></div><button class="chat__x" type="button" aria-label="Close chat">${icon('x')}</button></header>
+    <header class="chat__head"><span class="chat__avatar">ZH</span><div><b>ZH Assistant</b><small class="chat__mode">Answers about services, areas and booking</small></div><button class="chat__new" type="button" title="Start a new chat">New chat</button><button class="chat__x" type="button" aria-label="Close and clear chat">${icon('x')}</button></header>
     <div class="chat__log" role="log" aria-live="polite"></div>
     <div class="chat__chips"></div>
     <form class="chat__form"><label class="vh" for="chat-input">Message</label><input id="chat-input" autocomplete="off" maxlength="500" placeholder="Ask about a service, area or booking"><button type="submit" aria-label="Send">${icon('send')}</button></form>

@@ -594,7 +594,9 @@ h1,h2,h3{color:var(--ink);line-height:1.2;letter-spacing:-.015em}
 .chat__head{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px;background:var(--navy);color:#cfdaf0}
 .chat__head b{display:block;color:#fff;font-size:16px}
 .chat__head small{display:block;font-size:12.5px}
-.chat__head .chat__x{margin-left:auto;background:transparent;border-color:rgba(255,255,255,.2);color:#fff}
+.chat__new{margin-left:auto;height:34px;padding:0 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font:600 13px/1 var(--f);cursor:pointer;white-space:nowrap}
+.chat__new:hover{background:rgba(255,255,255,.08)}
+.chat__head .chat__x{margin-left:0;background:transparent;border-color:rgba(255,255,255,.2);color:#fff}
 .chat__head .chat__x:hover{background:rgba(255,255,255,.08)}
 .chat__avatar{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#fff;color:var(--navy);font:900 14px/1 "Unbounded",var(--f);letter-spacing:-.06em;position:relative}
 .chat__avatar::after{content:"";position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:50%;background:#16b364;border:2px solid var(--navy)}
