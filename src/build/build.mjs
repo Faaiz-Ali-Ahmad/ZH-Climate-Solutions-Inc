@@ -264,13 +264,14 @@ const write = (file, html) => {
 
 const brandItems = brands.map(([n, k]) => `<li class="bs-item"><b>${n}</b><small>${k}</small></li><li class="bs-sep" aria-hidden="true"></li>`).join('');
 const brandsBlock = `<section class="brandstrip" id="brands" aria-labelledby="brands-title">
-  <div class="wrap brandstrip__head"><h2 id="brands-title">Brands we install and service</h2><p>Plus most other makes and models. Mention yours when you book.</p></div>
+  <div class="brandstrip__head"><h2 id="brands-title"><span class="brandstrip__dot" aria-hidden="true"></span>Brands we install and service</h2></div>
   <div class="brandstrip__stage">
     <div class="brandstrip__back" aria-hidden="true"></div>
     <div class="brandstrip__band" tabindex="0" aria-label="Brands we work with. Drag or swipe to scroll.">
       <ul class="brandstrip__track">${brandItems}</ul><ul class="brandstrip__track" aria-hidden="true">${brandItems}</ul>
     </div>
   </div>
+  <p class="brandstrip__note">Plus most other makes and models. Mention yours when you book.</p>
 </section>`;
 
 /* ---------------- HOME ---------------- */

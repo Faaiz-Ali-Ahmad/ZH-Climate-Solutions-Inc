@@ -330,10 +330,11 @@ h1,h2,h3{color:var(--ink);line-height:1.2;letter-spacing:-.015em}
 .areas__none[hidden]{display:none}
 
 /* brands strip: tilted, auto-scrolling, draggable */
-.brandstrip{padding:56px 0 64px;overflow:hidden;background:#fff}
-.brandstrip__head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:28px}
-.brandstrip__head h2{font-size:clamp(22px,1.9vw,28px);font-weight:600}
-.brandstrip__head p{font-size:15px;color:var(--mute)}
+.brandstrip{padding:56px 0 40px;overflow:hidden;background:#fff}
+.brandstrip__head{position:relative;z-index:2;display:flex;justify-content:center;margin-bottom:-46px;padding:0 16px}
+.brandstrip__head h2{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border-radius:999px;background:#fff;color:var(--navy);font-size:clamp(16px,1.3vw,19px);font-weight:700;letter-spacing:0;line-height:1.2;text-align:center;border:1px solid var(--line);box-shadow:0 10px 26px -12px rgba(10,31,68,.45);transform:rotate(-2deg)}
+.brandstrip__dot{width:10px;height:10px;flex:none;background:var(--orange);transform:rotate(45deg);border-radius:1px}
+.brandstrip__note{margin-top:20px;padding:0 16px;text-align:center;font-size:15px;color:var(--mute)}
 .brandstrip__stage{position:relative;padding:32px 0}
 .brandstrip__back{position:absolute;left:-10%;right:-10%;top:50%;height:104px;margin-top:-52px;background:var(--orange);transform:rotate(1.4deg);opacity:.9}
 .brandstrip__band{position:relative;display:flex;width:120%;margin-left:-10%;background:var(--navy);transform:rotate(-2deg);box-shadow:0 14px 30px -18px rgba(10,31,68,.6);overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;outline-offset:-4px}
@@ -344,7 +345,10 @@ h1,h2,h3{color:var(--ink);line-height:1.2;letter-spacing:-.015em}
 .bs-item small{font-size:14px;color:#9fb1cf;margin-top:4px}
 .bs-sep{flex:none;width:12px;height:12px;background:var(--orange);transform:rotate(45deg);border-radius:1px}
 @media (max-width:640px){
-  .brandstrip{padding:40px 0 48px}
+  .brandstrip{padding:40px 0 32px}
+  .brandstrip__head{margin-bottom:-36px}
+  .brandstrip__head h2{padding:10px 18px}
+  .brandstrip__note{font-size:14px;margin-top:14px}
   .brandstrip__stage{padding:24px 0}
   .brandstrip__track{padding:22px 0}
   .bs-item{padding:0 26px}
