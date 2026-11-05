@@ -256,6 +256,17 @@ export const services = [
   }
 ];
 
+// Customer reviews. While `sample` is true, every card is tagged "Sample review" and a note explains they are placeholders.
+// Before launch: replace the items with real customer reviews (e.g. from Google) and set sample: false.
+export const reviews = {
+  sample: true,
+  items: [
+    { name: 'Priya S.', city: 'Brampton', service: 'Furnace repair', text: 'Our furnace stopped working on a freezing night. They answered right away, came out the same evening and had the heat back on within the hour. Clear explanation, fair price.' },
+    { name: 'Daniel M.', city: 'Mississauga', service: 'Heat pump installation', text: 'They walked us through ducted versus hybrid options without any pressure, installed the system in a day and left everything spotless. The house has never been this comfortable.' },
+    { name: 'Harjit K.', city: 'Caledon', service: 'Water heater replacement', text: 'Booked online in the morning and got a call back within the hour. The new tankless unit was installed the next day. Professional from start to finish.' }
+  ]
+};
+
 // Equipment brands ZH installs and services (names as text — no logos used)
 export const brands = [
   ['Trane', 'Furnaces & AC'], ['Carrier', 'Furnaces & AC'], ['Lennox', 'Furnaces & AC'], ['Gree', 'Heat pumps & ductless'],

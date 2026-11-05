@@ -3,7 +3,7 @@ import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { company as C, trust, services, bookServices, areas, generalFaqs, brands } from '../content/data.mjs';
+import { company as C, trust, services, bookServices, areas, generalFaqs, brands, reviews } from '../content/data.mjs';
 import { icon } from './icons.mjs';
 import { sub } from '../content/subpages.mjs';
 
@@ -296,6 +296,20 @@ const brandsTpl = `<section class="brandstrip" id="brands" aria-labelledby="bran
   <p class="brandstrip__note">Plus most other makes and models. Mention yours when you book.</p>
 </section>`;
 
+const star = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></svg>';
+const reviewsBlock = () => `<section class="sec reviews" id="reviews">
+  <div class="wrap">
+    <div class="sec__head center"><p class="eyebrow">Customer reviews</p><h2 class="h2">What homeowners say about ZH</h2>${reviews.sample ? '<p class="reviews__note">Sample reviews shown for preview. To be replaced with real customer reviews before launch.</p>' : ''}</div>
+    <div class="reviews__grid">
+      ${reviews.items.map(r => `<figure class="review">
+        <div class="review__top"><span class="review__stars" role="img" aria-label="5 out of 5 stars">${star.repeat(5)}</span>${reviews.sample ? '<span class="review__tag">Sample review</span>' : ''}</div>
+        <blockquote>${esc(r.text)}</blockquote>
+        <figcaption><span class="review__avatar" aria-hidden="true">${esc(r.name[0])}</span><span><b>${esc(r.name)}</b><small>${esc(r.city)} · ${esc(r.service)}</small></span></figcaption>
+      </figure>`).join('')}
+    </div>
+  </div>
+</section>`;
+
 /* ---------------- HOME ---------------- */
 const serviceCard = s => `<article class="scard tone-${s.tone} reveal">
   <div class="scard__ic">${icon(s.icon)}</div>
@@ -375,6 +389,8 @@ ${process}
     </div>
   </div>
 </section>
+
+${reviewsBlock()}
 
 ${brandsFor()}
 
