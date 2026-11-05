@@ -261,9 +261,9 @@ export const services = [
 export const reviews = {
   sample: true,
   items: [
-    { name: 'Priya S.', city: 'Brampton', service: 'Furnace repair', text: 'Our furnace stopped working on a freezing night. They answered right away, came out the same evening and had the heat back on within the hour. Clear explanation, fair price.' },
-    { name: 'Daniel M.', city: 'Mississauga', service: 'Heat pump installation', text: 'They walked us through ducted versus hybrid options without any pressure, installed the system in a day and left everything spotless. The house has never been this comfortable.' },
-    { name: 'Harjit K.', city: 'Caledon', service: 'Water heater replacement', text: 'Booked online in the morning and got a call back within the hour. The new tankless unit was installed the next day. Professional from start to finish.' }
+    { name: 'Faaiz', city: 'Brampton', service: 'Furnace repair', text: 'Our furnace stopped working on a freezing night. They answered right away, came out the same evening and had the heat back on within the hour. Clear explanation, fair price.' },
+    { name: 'Hasnain', city: 'Mississauga', service: 'Heat pump installation', text: 'They walked us through ducted versus hybrid options without any pressure, installed the system in a day and left everything spotless. The house has never been this comfortable.' },
+    { name: 'Adeeb', city: 'Brampton', service: 'Water heater replacement', text: 'Booked online in the morning and got a call back within the hour. The new tankless unit was installed the next day. Professional from start to finish.' }
   ]
 };
 
