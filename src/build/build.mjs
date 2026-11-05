@@ -39,6 +39,7 @@ const head = ({ title, desc, page, extraHead = '' }) => `<!doctype html>
 <link rel="stylesheet" href="~/assets/css/fonts.css?v=${V}">
 <link rel="stylesheet" href="~/assets/css/style.css?v=${V}">
 <script>document.documentElement.classList.add('js')</script>
+<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 ${extraHead}
 </head>`;
 
