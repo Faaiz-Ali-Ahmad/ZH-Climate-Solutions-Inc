@@ -1,0 +1,13 @@
+{
+  "name": "zh-climate-solutions",
+  "version": "4.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.mjs",
+    "build": "node build/build.mjs",
+    "build:3d": "npx --yes esbuild@0.28.2 src/app.js --bundle --format=iife --minify --outfile=js/app.bundle.js",
+    "dist": "node build/build.mjs && node build/dist.mjs"
+  }
+}
