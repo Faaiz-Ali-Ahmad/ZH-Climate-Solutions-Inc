@@ -435,7 +435,7 @@ ${brandsFor()}
 ${ctaBand('Comfort, safety and power — one call away.')}
 </main>
 ${footer}
-${scripts('\n<script src="~/assets/js/app.bundle.js?v=${V}"></script>')}`);
+${scripts(`\n<script src="~/assets/js/app.bundle.js?v=${V}"></script>`)}`);
 
 /* ---------------- SERVICE PAGES ---------------- */
 for (const s of services) {
