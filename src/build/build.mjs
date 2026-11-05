@@ -262,13 +262,31 @@ const write = (file, html) => {
   const out = path.join(root, file); mkdirSync(path.dirname(out), { recursive: true }); writeFileSync(out, html); console.log('  ✓', file);
 };
 
-const brandItems = brands.map(([n, k]) => `<li class="bs-item"><b>${n}</b><small>${k}</small></li><li class="bs-sep" aria-hidden="true"></li>`).join('');
-const brandsBlock = `<section class="brandstrip" id="brands" aria-labelledby="brands-title">
+// Each service page leads with the brands most relevant to it; the rest follow in the usual order.
+const brandFirst = {
+  heating: ['Trane', 'Carrier', 'Lennox', 'RunTru', 'Navien', 'ecobee', 'Aprilaire'],
+  cooling: ['Trane', 'Carrier', 'Lennox', 'Gree', 'Midea', 'RunTru', 'ecobee'],
+  'heat-pumps': ['Gree', 'Midea', 'Trane', 'Carrier', 'Lennox', 'ecobee'],
+  'ventilation-air-quality': ['Aprilaire', 'ecobee', 'Trane', 'Carrier', 'Lennox'],
+  'water-heaters': ['Bradford White', 'A.O. Smith', 'Rinnai', 'Navien', 'Noritz', 'Excalibur'],
+  'water-treatment': ['A.O. Smith', 'Bradford White', 'Rinnai', 'Navien'],
+  plumbing: ['Kohler', 'Bradford White', 'A.O. Smith', 'Rinnai', 'Navien', 'Noritz'],
+  electrical: ['Kohler', 'GE Appliances', 'ecobee'],
+  commercial: ['Trane', 'Carrier', 'Lennox', 'GE Appliances', 'Bradford White', 'A.O. Smith'],
+  'maintenance-plans': ['Trane', 'Carrier', 'Lennox', 'Gree', 'Bradford White', 'Aprilaire']
+};
+const brandsFor = (slug = '') => {
+  const first = brandFirst[slug] || [];
+  const list = [...first.map(n => brands.find(b => b[0] === n)).filter(Boolean), ...brands.filter(b => !first.includes(b[0]))];
+  const items = list.map(([n, k]) => `<li class="bs-item"><b>${n}</b><small>${k}</small></li><li class="bs-sep" aria-hidden="true"></li>`).join('');
+  return brandsTpl.replace(/@@ITEMS@@/g, items);
+};
+const brandsTpl = `<section class="brandstrip" id="brands" aria-labelledby="brands-title">
   <div class="brandstrip__head"><h2 id="brands-title"><span class="brandstrip__dot" aria-hidden="true"></span>Brands we install and service</h2></div>
   <div class="brandstrip__stage">
     <div class="brandstrip__back" aria-hidden="true"></div>
     <div class="brandstrip__band" tabindex="0" aria-label="Brands we work with. Drag or swipe to scroll.">
-      <ul class="brandstrip__track">${brandItems}</ul><ul class="brandstrip__track" aria-hidden="true">${brandItems}</ul>
+      <ul class="brandstrip__track">@@ITEMS@@</ul><ul class="brandstrip__track" aria-hidden="true">@@ITEMS@@</ul>
     </div>
   </div>
   <p class="brandstrip__note">Plus most other makes and models. Mention yours when you book.</p>
@@ -317,7 +335,7 @@ ${header('home')}
   <div class="wrap trustbar__in">${trust.map(t => `<div class="trustbar__item">${icon(t.icon)}<div><b>${t.title}</b><span>${t.text}</span></div></div>`).join('')}</div>
 </section>
 
-${brandsBlock}
+${brandsFor()}
 
 <section class="sec" id="services">
   <div class="wrap">
@@ -421,8 +439,6 @@ ${header(s.slug)}
   </div>
 </section>
 
-${brandsBlock}
-
 <section class="sec">
   <div class="wrap intro__grid">
     <div class="intro__text"><p class="eyebrow">Overview</p><h2 class="h2 h2--md">${s.name} service you can count on, from Brampton to across Ontario.</h2>${s.intro.map(p => `<p>${esc(p)}</p>`).join('')}</div>
@@ -436,6 +452,8 @@ ${brandsBlock}
     <div class="offers">${s.offerings.map((o, i) => `<article class="offer reveal"><span class="offer__n">${String(i + 1).padStart(2, '0')}</span><h3><a href="~/${subFile(s, o)}">${esc(o.t)}</a></h3><p>${esc(o.d)}</p><div class="offer__foot"><a class="link" href="~/${subFile(s, o)}">Details ${icon('arrow')}</a><a class="offer__book" href="#book" data-visit="${visitFor(o.t)}">Book</a></div></article>`).join('')}</div>
   </div>
 </section>
+
+${brandsFor(s.slug)}
 
 ${emergency}
 ${process}
@@ -503,6 +521,8 @@ ${header(s.slug)}
   </div>
 </section>
 
+${brandsFor(s.slug)}
+
 ${emergency}
 ${process}
 
@@ -513,7 +533,6 @@ ${process}
   </div>
 </section>
 
-${brandsBlock}
 ${ctaBand(`Ready to book ${o.t.toLowerCase()}?`)}
 </main>
 ${footer}
