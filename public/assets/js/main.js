@@ -9,6 +9,12 @@
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     const va = document.createElement('script'); va.defer = true; va.src = '/_vercel/insights/script.js'; document.head.appendChild(va);
   }
+
+  // Vercel Speed Insights (web vitals and performance metrics). Loads only on the live https site, not when testing locally.
+  if (location.protocol === 'https:' && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+    window.si = window.si || function (...params) { (window.siq = window.siq || []).push(params); };
+    const si = document.createElement('script'); si.defer = true; si.src = '/_vercel/speed-insights/script.js'; document.head.appendChild(si);
+  }
   const escH = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
